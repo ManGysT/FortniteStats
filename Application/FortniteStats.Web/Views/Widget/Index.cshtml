@@ -1,0 +1,16 @@
+﻿@using FortniteStats.Web.Models.Widget
+@model WidgetOutputModel
+@section head
+{
+    <style type="text/css">
+        body {
+            background-color: #00FF00;
+            color: white;
+        }
+    </style>
+}
+
+@foreach (var statItem in this.Model.Stats)
+{
+    <span>@(statItem.Key)</span>@: <span>@(statItem.Value)</span>
+}

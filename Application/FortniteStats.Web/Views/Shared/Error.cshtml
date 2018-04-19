@@ -1,0 +1,18 @@
+﻿@model ErrorModel
+
+@section head
+{
+    <style type="text/css">
+        .error {
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+}
+
+<ul>
+    @foreach (var error in this.Model.Errors)
+    {
+        <li class="error">@(error)</li>
+    }
+</ul>
