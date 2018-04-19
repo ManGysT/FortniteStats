@@ -1,16 +1,27 @@
 ﻿@using FortniteStats.Web.Models.Widget
 @model WidgetOutputModel
-@section head
-{
+@{ 
+    this.Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortnite Stats Widget</title>
     <style type="text/css">
         body {
-            background-color: #00FF00;
-            color: white;
+            /*background-color: #00FF00;
+            color: white;*/
+            font-size: 35px;
+            font-family: 'Burbank Big';
         }
     </style>
-}
-
-@foreach (var statItem in this.Model.Stats)
-{
-    <span>@(statItem.Key)</span>@: <span>@(statItem.Value)</span>
-}
+</head>
+<body>
+    @foreach (var statItem in this.Model.Stats)
+    {
+        <span>@(statItem.Key)</span>@: <span>@(statItem.Value)</span>
+    }
+</body>
+</html>

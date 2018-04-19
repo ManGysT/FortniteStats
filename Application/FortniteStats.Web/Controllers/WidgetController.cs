@@ -30,5 +30,17 @@ namespace FortniteStats.Web.Controllers
 
             return this.View(outputModel);
         }
+
+        [GET("")]
+        [AjaxOnly]
+        public async Task<ActionResult> GetData(WidgetOptions options)
+        {
+            var statsFetcher = new StatsFetchingService(StatsFetchingOptions.Factory(options));
+
+            var statsFields = options.Stats.GetCommaSeparatedValues();
+            var stats = await statsFetcher.GetStatsAsync(statsFields);
+
+            return this.Json(stats);
+        }
     }
 }
