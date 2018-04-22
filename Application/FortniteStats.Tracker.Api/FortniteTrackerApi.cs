@@ -23,15 +23,29 @@ namespace FortniteStats.Tracker.Api
         /// <param name="platform">The platform.</param>
         /// <param name="epicUserName">Name of the epic user.</param>
         /// <returns></returns>
-        public async Task<ProfileDetails> GetProfileDetailsAsync(string platform, string epicUserName)
+        public ProfileDetails GetProfileDetails(string platform, string epicUserName)
         {
             var request = new RestRequest("profile/{platform}/{epicUserName}", Method.GET);
             request.AddUrlSegment("platform", platform.ToLowerInvariant());
             request.AddUrlSegment("epicUserName", epicUserName);
 
-            var response = await this.client.ExecuteTaskAsync<ProfileDetails>(request);
+            var response = this.client.Execute<ProfileDetails>(request);
 
             return response.Data;
+        }
+
+        /// <summary>
+        /// Gets the profile details.
+        /// </summary>
+        /// <param name="platform">The platform.</param>
+        /// <param name="epicUserName">Name of the epic user.</param>
+        /// <returns></returns>
+        public async Task<ProfileDetails> GetProfileDetailsAsync(string platform, string epicUserName)
+        {
+            return await Task.Factory
+                .StartNew<ProfileDetails>(
+                    () => this.GetProfileDetails(platform, epicUserName)
+                );
         }
     }
 }

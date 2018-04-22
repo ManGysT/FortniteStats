@@ -1,0 +1,121 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="@(this.Url.Content("~/favicon.ico"))" type="image/x-icon">
+    <title>Fortnite Stats Widget Constructor</title>
+
+    <link href="@(this.Url.Content("~/Content/bootstrap.min.css"))" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="@(this.Url.Content("~/Content/constructor.css"))" rel="stylesheet" />
+
+    <script type="text/javascript" src="@(this.Url.Content("~/Scripts/jquery-3.3.1.min.js"))"></script>
+    <script type="text/javascript" src="@(this.Url.Content("~/Scripts/bootstrap.min.js"))"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+</head>
+<body>
+    <div class="container" style="margin-left: 50px;">
+        <div class="row">
+            <div class="col-sm-7 options">
+                <form action="">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Epic UserName</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="epicUserName" class="form-control" value="twitchEnotKingTV" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">API Key</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="apiKey" class="form-control" value="8a574109-eaea-46ca-8f29-866596661ace" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Stats</label>
+                        <div class="col-sm-9">
+                            <select class="form-control selectpicker" multiple name="stats" data-container="body">
+                                <optgroup label="За все время">
+                                    <option value="global.solo.kills">Соло килы</option>
+                                    <option value="global.solo.kills">Соло винрейт</option>
+                                </optgroup>
+                                <optgroup label="В текущем сезоне">
+                                    <option value="current.solo.kills">Соло килы</option>
+                                    <option value="current.solo.kills">Соло винрейт</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Widget URL</label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <input type="text" readonly id="widgetUrl" class="form-control" />
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary btn-sm" id="btn-copy">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5 preview">
+                <iframe id="preview-container"></iframe>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            var $form = $('.options form'),
+                baseUrl = 'http://fortnite-stats.loc';
+
+            function generateOutputUrl() {
+                let params = $form.find(':input')
+                    .serializeArray()
+                    .map(function (item) {
+                        return [item.name, item.value].join('=');
+                    });
+
+                return baseUrl + '?' + params.join('&');
+            }
+
+            function updateOutputUrlValue() {
+                var url = generateOutputUrl();
+                $('#widgetUrl').val(url);
+
+                $(document).trigger('widgetUrlChanged', [url]);
+            }
+
+            $(document).bind('widgetUrlChanged', function (e, url) {
+                $('#preview-container').attr('src', url);
+            });
+            
+            $form.find(':input').bind('change', function () {
+                updateOutputUrlValue();
+            });
+
+            $('#widgetUrl').click(function () {
+                $('#widgetUrl').select();
+            });
+
+            $('#btn-copy').click(function () {
+                $('#widgetUrl').select();
+                document.execCommand("copy");
+            });
+
+            $('#widgetUrl').change(function () {
+                alert('changed');
+            });
+
+            updateOutputUrlValue();
+        });
+    </script>
+</body>
+</html>

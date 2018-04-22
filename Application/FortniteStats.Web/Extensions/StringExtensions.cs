@@ -7,7 +7,7 @@ namespace FortniteStats.Web
 {
     public static class StringExtensions
     {
-        public static List<string> GetCommaSeparatedValues(this string source)
+        public static List<string> SplitCommaSeparatedValues(this string source)
         {
             var result = new List<string>();
 

@@ -8,20 +8,41 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="@(this.Url.Content("~/favicon.ico"))" type="image/x-icon">
     <title>Fortnite Stats Widget</title>
     <style type="text/css">
         body {
-            /*background-color: #00FF00;
-            color: white;*/
-            font-size: 35px;
+            font-size: 50px;
             font-family: 'Burbank Big';
         }
     </style>
+    <script type="text/javascript" src="@(this.Url.Content("~/Scripts/jquery-3.3.1.min.js"))"></script>
+    <script type="text/javascript" src="@(this.Url.Content("~/Scripts/jquery.signalR-2.2.3.min.js"))"></script>
+    <script type="text/javascript" src="@(this.Url.Content("~/signalr/hubs"))"></script>
+
 </head>
 <body>
-    @foreach (var statItem in this.Model.Stats)
-    {
-        <span>@(statItem.Key)</span>@: <span>@(statItem.Value)</span>
-    }
+    <div class="stats_container">
+        @foreach (var statItem in this.Model.Stats)
+        {
+            <span class="stat_name">@(statItem.Key)</span>@: <span class="stat_value">@(statItem.Value)</span>
+        }
+    </div>
+    
+    <script type="text/javascript">
+        $(function () {
+            var widgetHub = $.connection.widget;
+
+            
+
+            widgetHub.client.updateStats = function () {
+                console.log('updateStats');
+            };
+
+            $.connection.hub.start().done(function () {
+                widgetHub.server.runUpdaterJob();
+            });
+        });
+    </script>
 </body>
 </html>

@@ -18,5 +18,7 @@ namespace FortniteStats.Web.Models.Widget
         public string ApiKey { get; set; }
 
         public string Stats { get; set; }
+
+        public string StatsOutput { get; set; }
     }
 }
