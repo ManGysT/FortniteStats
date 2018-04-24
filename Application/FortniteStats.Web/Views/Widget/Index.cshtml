@@ -31,17 +31,19 @@
     
     <script type="text/javascript">
         $(function () {
-            var widgetHub = $.connection.widget;
+            var widgetHub = $.connection.widget,
+                widgetOptions = @(this.Model.Options.ToJs());
 
+            function init() {
+                widgetHub.server.subscribeOnStatsUpdates(widgetOptions);
+            }
             
 
-            widgetHub.client.updateStats = function () {
+            widgetHub.client.updateStats = function (stats) {
                 console.log('updateStats');
             };
 
-            $.connection.hub.start().done(function () {
-                widgetHub.server.runUpdaterJob();
-            });
+            $.connection.hub.start().done(init);
         });
     </script>
 </body>

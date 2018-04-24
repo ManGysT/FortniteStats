@@ -147,10 +147,12 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Common\FortniteStatsFetcherJob.cs" />
     <Compile Include="Common\GamePlatform.cs" />
+    <Compile Include="Common\Json\JsonHelper.cs" />
     <Compile Include="Common\LifetimeStatistic.cs" />
     <Compile Include="Common\StatsCollection.cs" />
     <Compile Include="Controllers\WidgetConstructorController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
+    <Compile Include="Extensions\CommonExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

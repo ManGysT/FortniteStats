@@ -16,7 +16,10 @@ namespace FortniteStats.Web.Controllers
                 return this.View("Error", ErrorModel.Factory(this.ModelState));
             }
 
-            var outputModel = new WidgetOutputModel();
+            var outputModel = new WidgetOutputModel
+            {
+                Options = options
+            };
 
             return this.View(outputModel);
         }
